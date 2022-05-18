@@ -1,6 +1,8 @@
+import { signOut } from 'firebase/auth';
 import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
+import auth from '../firebase.init';
 import Header from './Header';
 const Home = ({ setTasks, user, refetch }) => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -72,11 +74,17 @@ const Home = ({ setTasks, user, refetch }) => {
                                 </div>
                                 <div class="form-control mt-6">
                                     {
-                                        user?.email ? <button class="btn btn-primary" type='submit'>Add Task</button> : <Header />
-
+                                        user?.email && <button class="btn btn-primary" type='submit'>Add Task</button>
                                     }
                                 </div>
                             </form>
+                            {
+                                user?.email ? <>
+                                    <button onClick={() => {
+                                        signOut(auth);
+                                    }} className='btn btn-xs my-2'>Sign Out</button></> : <Header />
+
+                            }
                         </div>
                     </div>
                 </div>

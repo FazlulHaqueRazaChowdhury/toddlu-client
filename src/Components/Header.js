@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../firebase.init';
+import Loading from './Loading';
 
 const Header = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     if (loading) {
-        <p>Loading</p>
+        <Loading />
     }
     return (
         <div>

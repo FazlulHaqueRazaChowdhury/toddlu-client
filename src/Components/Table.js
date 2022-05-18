@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import Loading from './Loading';
 
 const Table = ({ tasks, isLoading, loading, user, refetch }) => {
-    if (loading || isLoading) {
-        return <p>Loading</p>
-    }
+
+
     const handleDelete = (id) => {
         fetch(`http://localhost:4000/tasks/${id}`, {
             method: "DELETE",
@@ -47,6 +47,9 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
                 }
 
             });
+    }
+    if (loading || isLoading) {
+        return <Loading />;
     }
     return (
         <div className='container mx-auto'>
