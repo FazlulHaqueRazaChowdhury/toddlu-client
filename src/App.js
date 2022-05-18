@@ -36,7 +36,7 @@ function App() {
 
       <Home user={user} refetch={refetch} />
       {
-        user?.email ? <Table tasks={tasks} isLoading={isLoading} loading={loading} refetch={refetch} /> : <h1 className='text-4xl text-center'>Please Sign Up WIth Google</h1>
+        user?.email ? <Table tasks={tasks} isLoading={isLoading} loading={loading} refetch={refetch} /> : <h1 className='text-4xl text-center'>Please Sign Up With Google</h1>
       }
       <ToastContainer />
     </div>
