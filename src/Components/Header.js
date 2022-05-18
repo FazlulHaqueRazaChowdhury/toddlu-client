@@ -1,17 +1,33 @@
 import React from 'react';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import auth from '../firebase.init';
-import Loading from './Loading';
 
+import auth from '../firebase.init';
+
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+
+import axios from 'axios';
 const Header = () => {
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-    if (loading) {
-        <Loading />
+    const provider = new GoogleAuthProvider();
+
+
+    const handleGoogle = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+
+                // The signed-in user info.
+                const user = result.user;
+                axios.put(`http://localhost:4000/signIn/${user.email}`)
+                    .then(res => {
+                        localStorage.setItem('accessToken', res.data.token);
+                    });
+                // ...
+            })
     }
     return (
         <div>
             <button class="btn btn-outline-primary w-full my-4 " onClick={() => {
-                signInWithGoogle();
+                handleGoogle();
             }}>Sign In With Google</button>
         </div>
     );

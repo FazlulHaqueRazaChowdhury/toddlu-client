@@ -1,12 +1,12 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Home from './Components/Home';
 import Table from './Components/Table';
-import { useState } from 'react';
+
 import { useQuery } from 'react-query';
 import { useAuthState } from 'react-firebase-hooks/auth'
 import auth from './firebase.init';
-import Header from './Components/Header';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from './Components/Loading';
@@ -18,7 +18,7 @@ function App() {
     return <p><Loading /></p>
   }
   return (
-    <div className="App bg-base-200">
+    <div className="App bg-base-200 ">
 
       <Home user={user} refetch={refetch} />
       {

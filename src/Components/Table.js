@@ -52,7 +52,7 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
     }
 
     return (
-        <div className='container mx-auto'>
+        <div className='container mx-auto min-h-screen'>
             <div class="overflow-x-auto my-[100px]">
                 <h1 className='text-5xl font-bold my-[20px] text-center'>Your today's list.</h1>
                 <table class="table w-full">

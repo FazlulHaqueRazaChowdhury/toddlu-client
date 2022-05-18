@@ -1,11 +1,11 @@
 import { signOut } from 'firebase/auth';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import auth from '../firebase.init';
 import Header from './Header';
 const Home = ({ setTasks, user, refetch }) => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
 
     const onSubmit = data => {
         const task = {
@@ -26,6 +26,7 @@ const Home = ({ setTasks, user, refetch }) => {
                 if (data.insertedId) {
                     toast.success('Task Added')
                     refetch();
+                    reset();
                 }
                 else {
                     toast.error('Something went wrong')
@@ -83,6 +84,7 @@ const Home = ({ setTasks, user, refetch }) => {
                                     <button onClick={() => {
                                         signOut(auth);
                                         refetch();
+                                        localStorage.removeItem('accessToken');
                                     }} className='btn btn-xs my-2'>Sign Out</button></> : <Header />
 
                             }
