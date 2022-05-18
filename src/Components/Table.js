@@ -12,6 +12,7 @@ const Table = ({ tasks }) => {
                             <th></th>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>STATUS</th>
                             <th>Done</th>
                             <th>Delete</th>
                         </tr>
@@ -24,7 +25,8 @@ const Table = ({ tasks }) => {
                                     <th>{index + 1}</th>
                                     <td>{task?.name}</td>
                                     <td>{task?.desc}</td>
-                                    <td><button className='btn btn-primary'>Done</button></td>
+                                    <td>{task?.status}</td>
+                                    <td><button className='btn btn-primary'>Complete</button></td>
                                     <td><button className='btn btn-warning'>Delete</button></td>
                                 </tr>)
                         }

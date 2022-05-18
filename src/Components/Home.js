@@ -3,21 +3,10 @@ import { useForm } from "react-hook-form";
 const Home = ({ setTasks }) => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    const task = [
-        { id: 1, name: "Namaz", desc: "Fajar" },
-        { id: 2, name: "Walking", desc: "At 6.00 am" },
-        { id: 3, name: "Lunch", desc: "With eggs." },
-        { id: 4, name: "Gym", desc: "Will do Cardio" },
-
-    ]
-
     const onSubmit = data => {
-        task.push(data);
-        setTasks(task);
+
     };
-    useEffect(() => {
-        setTasks(task);
-    }, [])
+
     return (
         <div>
             <div class="hero min-h-screen bg-base-200">
