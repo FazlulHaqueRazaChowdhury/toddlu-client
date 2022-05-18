@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import { signOut } from 'firebase/auth';
+import React from 'react';
 import { toast } from 'react-toastify';
+import auth from '../firebase.init';
 import Loading from './Loading';
 
 const Table = ({ tasks, isLoading, loading, user, refetch }) => {
@@ -9,9 +11,16 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json'
+                ,
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
             }
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 403 || res.status === 404 || res.status === 401) {
+                    return signOut(auth);
+                }
+                return res.json()
+            })
             .then(data => {
                 if (data.deletedCount) {
                     toast.error('Task Deleted');
@@ -31,11 +40,18 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json'
+                ,
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
             }
             ,
             body: JSON.stringify(update)
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 403 || res.status === 404 || res.status === 401) {
+                    return signOut(auth);
+                }
+                return res.json()
+            })
             .then(data => {
                 if (data.matchedCount) {
                     toast.success('You have completed the task. Congrats!')
@@ -53,9 +69,9 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
 
     return (
         <div className='container mx-auto min-h-screen'>
-            <div class="overflow-x-auto my-[100px]">
+            <div className="overflow-x-auto my-[100px]">
                 <h1 className='text-5xl font-bold my-[20px] text-center'>Your today's list.</h1>
-                <table class="table w-full">
+                <table className="table w-full">
 
                     <thead>
                         <tr>
@@ -71,7 +87,7 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
 
                         {
                             tasks.map((task, index) =>
-                                <tr >
+                                <tr key={task._id}>
                                     <th>{index + 1}</th>
                                     <td className={`${task?.status === 'Complete' ? 'line-through' : ''}`}>{task?.name}</td>
                                     <td className={`${task?.status === 'Complete' ? 'line-through' : ''}`}>{task?.desc}</td>

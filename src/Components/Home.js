@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import auth from '../firebase.init';
 import Header from './Header';
 const Home = ({ setTasks, user, refetch }) => {
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const onSubmit = data => {
         const task = {
@@ -17,11 +17,17 @@ const Home = ({ setTasks, user, refetch }) => {
         fetch(`http://localhost:4000/tasks`, {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify(task)
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 403 || res.status === 404 || res.status === 401) {
+                    return signOut(auth);
+                }
+                return res.json()
+            })
             .then(data => {
                 if (data.insertedId) {
                     toast.success('Task Added')
@@ -38,22 +44,22 @@ const Home = ({ setTasks, user, refetch }) => {
 
     return (
         <div>
-            <div class="hero min-h-screen bg-base-200">
+            <div className="hero min-h-screen bg-base-200">
 
-                <div class="hero-content flex-col lg:flex-row-reverse">
+                <div className="hero-content flex-col lg:flex-row-reverse">
 
-                    <div class="text-center lg:text-left">
-                        <h1 class="text-5xl font-bold">Toddlu</h1>
-                        <p class="py-6">Hey {user?.email ? user.displayName : 'there'},I'm Toddlu ! Add your task right now and make your life more easy,</p>
+                    <div className="text-center lg:text-left">
+                        <h1 className="text-5xl font-bold">Toddlu</h1>
+                        <p className="py-6">Hey {user?.email ? user.displayName : 'there'},I'm Toddlu ! Add your task right now and make your life more easy,</p>
                     </div>
-                    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <div class="card-body">
+                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                        <div className="card-body">
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <div class="form-control">
-                                    <label class="label">
-                                        <span class="label-text">Name</span>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text">Name</span>
                                     </label>
-                                    <input type="text" placeholder="Name" class="input input-bordered" {...register("name", {
+                                    <input type="text" placeholder="Name" className="input input-bordered" {...register("name", {
                                         required: {
                                             value: true,
                                             message: 'Please give your task a name!'
@@ -61,11 +67,11 @@ const Home = ({ setTasks, user, refetch }) => {
                                     })} />
                                     <p className='text-warning'>{errors?.name?.type === 'required' ? errors?.name?.message : ''}</p>
                                 </div>
-                                <div class="form-control">
-                                    <label class="label">
-                                        <span class="label-text">Description</span>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text">Description</span>
                                     </label>
-                                    <input type="text" placeholder="Description" class="input input-bordered" {...register("desc", {
+                                    <input type="text" placeholder="Description" className="input input-bordered" {...register("desc", {
                                         required: {
                                             value: true,
                                             message: 'Please right something!'
@@ -73,9 +79,9 @@ const Home = ({ setTasks, user, refetch }) => {
                                     })} />
                                     <p className='text-warning'>{errors?.desc?.type === 'required' ? errors?.desc?.message : ''}</p>
                                 </div>
-                                <div class="form-control mt-6">
+                                <div className="form-control mt-6">
                                     {
-                                        user?.email && <button class="btn btn-primary" type='submit'>Add Task</button>
+                                        user?.email && <button className="btn btn-primary" type='submit'>Add Task</button>
                                     }
                                 </div>
                             </form>
