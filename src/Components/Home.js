@@ -14,7 +14,7 @@ const Home = ({ setTasks, user, refetch }) => {
             name: `${data.name}`,
             desc: `${data.desc}`,
         };
-        fetch(`http://localhost:4000/tasks`, {
+        fetch(`https://nameless-oasis-30548.herokuapp.com/tasks`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -24,7 +24,8 @@ const Home = ({ setTasks, user, refetch }) => {
         })
             .then(res => {
                 if (res.status === 403 || res.status === 404 || res.status === 401) {
-                    return signOut(auth);
+                    signOut(auth);
+                    return localStorage.removeItem('accessToken');
                 }
                 return res.json()
             })

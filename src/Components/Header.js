@@ -16,7 +16,7 @@ const Header = () => {
 
                 // The signed-in user info.
                 const user = result.user;
-                axios.put(`http://localhost:4000/signIn/${user.email}`)
+                axios.put(`https://nameless-oasis-30548.herokuapp.com/signIn/${user.email}`)
                     .then(res => {
                         localStorage.setItem('accessToken', res.data.token);
                     });

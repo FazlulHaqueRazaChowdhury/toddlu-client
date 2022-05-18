@@ -14,7 +14,7 @@ import Loading from './Components/Loading';
 function App() {
 
   const [user, loading, error] = useAuthState(auth);
-  const { data: tasks, isLoading, refetch } = useQuery(['email', user], () => fetch(`http://localhost:4000/tasks?email=${user?.email}`, {
+  const { data: tasks, isLoading, refetch } = useQuery(['email', user], () => fetch(`https://nameless-oasis-30548.herokuapp.com/tasks?email=${user?.email}`, {
     method: 'GET',
     headers: {
       'authorization': `Bearere ${localStorage.getItem('acccessToken')}`

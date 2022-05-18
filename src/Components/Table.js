@@ -7,7 +7,7 @@ import Loading from './Loading';
 const Table = ({ tasks, isLoading, loading, user, refetch }) => {
 
     const handleDelete = (id) => {
-        fetch(`http://localhost:4000/tasks/${id}`, {
+        fetch(`https://nameless-oasis-30548.herokuapp.com/tasks/${id}`, {
             method: "DELETE",
             headers: {
                 'Content-type': 'application/json'
@@ -17,7 +17,8 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
         })
             .then(res => {
                 if (res.status === 403 || res.status === 404 || res.status === 401) {
-                    return signOut(auth);
+                    signOut(auth);
+                    return localStorage.removeItem('accessToken');
                 }
                 return res.json()
             })
@@ -36,7 +37,7 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
         const update = {
             status: 'Complete'
         }
-        fetch(`http://localhost:4000/tasks/${id}`, {
+        fetch(`https://nameless-oasis-30548.herokuapp.com/tasks/${id}`, {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json'
@@ -48,7 +49,8 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
         })
             .then(res => {
                 if (res.status === 403 || res.status === 404 || res.status === 401) {
-                    return signOut(auth);
+                    signOut(auth);
+                    return localStorage.removeItem('accessToken');
                 }
                 return res.json()
             })
