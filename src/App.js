@@ -18,10 +18,12 @@ function App() {
     return <p><Loading /></p>
   }
   return (
-    <div className="App">
+    <div className="App bg-base-200">
 
       <Home user={user} refetch={refetch} />
-      <Table user={user} tasks={tasks} isLoading={isLoading} loading={loading} refetch={refetch} />
+      {
+        user ? <Table user={user} tasks={tasks} isLoading={isLoading} loading={loading} refetch={refetch} /> : <h1 className='text-4xl text-center'>Please Sign Up WIth Google</h1>
+      }
       <ToastContainer />
     </div>
   );

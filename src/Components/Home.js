@@ -82,6 +82,7 @@ const Home = ({ setTasks, user, refetch }) => {
                                 user?.email ? <>
                                     <button onClick={() => {
                                         signOut(auth);
+                                        refetch();
                                     }} className='btn btn-xs my-2'>Sign Out</button></> : <Header />
 
                             }

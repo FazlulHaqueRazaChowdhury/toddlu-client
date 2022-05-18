@@ -4,7 +4,6 @@ import Loading from './Loading';
 
 const Table = ({ tasks, isLoading, loading, user, refetch }) => {
 
-
     const handleDelete = (id) => {
         fetch(`http://localhost:4000/tasks/${id}`, {
             method: "DELETE",
@@ -51,6 +50,7 @@ const Table = ({ tasks, isLoading, loading, user, refetch }) => {
     if (loading || isLoading) {
         return <Loading />;
     }
+
     return (
         <div className='container mx-auto'>
             <div class="overflow-x-auto my-[100px]">
